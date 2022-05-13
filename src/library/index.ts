@@ -1,6 +1,8 @@
 import initialization from './initialization';
-import * as Interfaces from '../interfaces';
+import asyncMiddleware from './async.middleware';
+import taggingMiddleware from './tagging.middleware';
+import { TaggedLoclas } from './tagging.middleware';
 
 export * from '../interfaces';
 
-export { initialization, Interfaces };
+export { initialization, asyncMiddleware, taggingMiddleware, TaggedLoclas };
