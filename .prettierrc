@@ -1,19 +1,14 @@
 {
+    "trailingComma": "es5",
+    "proseWrap": "always",
+    "arrowParens": "avoid",
+    "bracketSpacing": true,
+    "singleQuote": true,
+    "semi": true,
     "useTabs": false,
     "tabWidth": 4,
     "printWidth": 80,
-    "proseWrap": "always",
     "overrides": [
-        {
-            "files": ["*.ts", "*.js", "*.tsx", "*.jsx"],
-            "options": {
-                "trailingComma": "es5",
-                "arrowParens": "avoid",
-                "semi": true,
-                "singleQuote": true,
-                "bracketSpacing": true
-            }
-        },
         {
             "files": "*.md",
             "options": {
