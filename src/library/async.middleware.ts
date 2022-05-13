@@ -1,5 +1,5 @@
 import { Query as ParsedQs } from 'express-serve-static-core';
-import * as WrapperExpress from '.';
+import * as WrapperExpress from '../interfaces';
 
 /**
  * Asynchronous request handler with automatic exception catching
