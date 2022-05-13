@@ -10,6 +10,11 @@ import fingerprint from 'express-fingerprint';
  * This is optional and if not specified, will not parse signed cookies.
  * If a string is provided, this is used as the secret.
  * @returns `express.Application` object
+ * @example
+ * import { initialization } from '@ducksclan/wrapper-express';
+ *
+ * let cookieSecret: string = 'secret';
+ * let app: express.Application = initialization(cookieSecret);
  */
 export default function initialization(
     cookieSecret?: string
