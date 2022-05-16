@@ -1,4 +1,4 @@
-import { TokensPair, TokenPayload, ExpiresInOptions } from './jsonwebtoken';
+import { JwtPayload, TokensPair, ExpiresInOptions } from './jsonwebtoken';
 import { TaggedLoclas } from './tagging.middleware';
 import JsonWebToken from './jsonwebtoken';
 import initialization from './initialization';
@@ -12,8 +12,8 @@ export {
     asyncMiddleware,
     taggingMiddleware,
     JsonWebToken,
+    JwtPayload,
     TokensPair,
-    TokenPayload,
     ExpiresInOptions,
     TaggedLoclas,
 };

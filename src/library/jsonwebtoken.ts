@@ -1,10 +1,17 @@
 import { Generator } from '@ducksclan/utils';
 import jwt from 'jsonwebtoken';
 
+interface RsaKeys {
+    publicKey: string;
+    privateKey: string;
+}
+
 /**
  * Template for custom token payload
  */
-export interface TokenPayload extends Record<string, string> {}
+export interface JwtPayload
+    extends jwt.JwtPayload,
+        Record<string, string | undefined | null> {}
 
 export interface TokensPair {
     access: string;
@@ -16,12 +23,9 @@ export interface ExpiresInOptions {
     refresh: string | number;
 }
 
-interface RsaKeys {
-    publicKey: string;
-    privateKey: string;
-}
-
-export default class JsonWebToken<Payload extends TokenPayload = TokenPayload> {
+export default class JsonWebToken<
+    Payload extends JwtPayload = JwtPayload
+> {
     protected secret: string;
     protected keys: RsaKeys;
 
@@ -69,16 +73,12 @@ export default class JsonWebToken<Payload extends TokenPayload = TokenPayload> {
         };
     }
 
-    decodeToken(token: string) {
-        return jwt.decode(token) as any;
+    verifyAccess(token: string): Payload {
+        return jwt.verify(token, this.publicKey) as Payload;
     }
 
-    verifyAccess(token: string) {
-        return jwt.verify(token, this.publicKey) as any;
-    }
-
-    verifyRefresh(token: string) {
-        return jwt.verify(token, this.secret) as any;
+    verifyRefresh(token: string): Payload {
+        return jwt.verify(token, this.secret) as Payload;
     }
 
     /**
