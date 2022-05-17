@@ -4,3 +4,4 @@ export * from './request';
 export * from './next.function';
 export * from './middleware';
 export * from './error.middleware';
+export * from './http.status';
