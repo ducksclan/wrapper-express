@@ -1,4 +1,4 @@
-import { HttpStatus, httpStatusNames } from '../interfaces';
+import { HttpStatus } from '../interfaces';
 
 export default class ApiError extends Error {
     status: HttpStatus;
@@ -11,15 +11,18 @@ export default class ApiError extends Error {
     }
 
     static InternalServerError(debug?: string) {
-        return new this(httpStatusNames[500], 500, debug);
+        let code = HttpStatus.InternalServerError;
+        return new this('Internal Server Error', code, debug);
     }
 
     static NotImplemented(debug?: string) {
-        return new this(httpStatusNames[501], 501, debug);
+        let code = HttpStatus.NotImplemented;
+        return new this('Not Implemented', code, debug);
     }
 
     static ServiceUnavailable(debug?: string) {
-        return new this(httpStatusNames[503], 503, debug);
+        let code = HttpStatus.ServiceUnavailable;
+        return new this('Service Unavailable', code, debug);
     }
 
     static handle(error: unknown): ApiError {
