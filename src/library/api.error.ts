@@ -10,19 +10,52 @@ export default class ApiError extends Error {
         this.debug = debug;
     }
 
+    static BadRequest(message?: string, debug?: string) {
+        return new this(message, HttpStatus.BadRequest, debug);
+    }
+
+    static Unauthorized(message?: string, debug?: string) {
+        return new this(message, HttpStatus.Unauthorized, debug);
+    }
+
+    static PaymentRequired(message?: string, debug?: string) {
+        return new this(message, HttpStatus.PaymentRequired, debug);
+    }
+
+    static Forbidden(message?: string, debug?: string) {
+        return new this(message, HttpStatus.Forbidden, debug);
+    }
+
+    static NotFound(message?: string, debug?: string) {
+        return new this(message, HttpStatus.NotFound, debug);
+    }
+
+    static Conflict(message?: string, debug?: string) {
+        return new this(message, HttpStatus.Conflict, debug);
+    }
+
+    static Gone(message?: string, debug?: string) {
+        return new this(message, HttpStatus.Gone, debug);
+    }
+
     static InternalServerError(debug?: string) {
-        let code = HttpStatus.InternalServerError;
-        return new this('Internal Server Error', code, debug);
+        return new this(
+            'Internal Server Error',
+            HttpStatus.InternalServerError,
+            debug
+        );
     }
 
     static NotImplemented(debug?: string) {
-        let code = HttpStatus.NotImplemented;
-        return new this('Not Implemented', code, debug);
+        return new this('Not Implemented', HttpStatus.NotImplemented, debug);
     }
 
     static ServiceUnavailable(debug?: string) {
-        let code = HttpStatus.ServiceUnavailable;
-        return new this('Service Unavailable', code, debug);
+        return new this(
+            'Service Unavailable',
+            HttpStatus.ServiceUnavailable,
+            debug
+        );
     }
 
     static handle(error: unknown): ApiError {
