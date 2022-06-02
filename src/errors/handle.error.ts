@@ -13,7 +13,7 @@ export default function handleError(error: unknown): ApiError {
         return err;
     }
 
-    if (isNotEmpty(error)) {
+    if (!isNotEmpty(error)) {
         return ServerError.InternalServerError(
             'error handling: error is empty'
         );
