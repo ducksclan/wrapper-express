@@ -1,4 +1,10 @@
+import { ApiError, ClientError, ServerError } from '../errors';
 import { Generator } from '@ducksclan/utils';
+import {
+    JsonWebTokenError,
+    NotBeforeError,
+    TokenExpiredError,
+} from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 
 interface RsaKeys {
@@ -23,9 +29,7 @@ export interface ExpiresInOptions {
     refresh: string | number;
 }
 
-export default class JsonWebToken<
-    Payload extends JwtPayload = JwtPayload
-> {
+export default class JsonWebToken<Payload extends JwtPayload = JwtPayload> {
     protected secret: string;
     protected keys: RsaKeys;
 
@@ -74,11 +78,19 @@ export default class JsonWebToken<
     }
 
     verifyAccess(token: string): Payload {
-        return jwt.verify(token, this.publicKey) as Payload;
+        try {
+            return jwt.verify(token, this.publicKey) as Payload;
+        } catch (error) {
+            throw handleJWTError(error);
+        }
     }
 
     verifyRefresh(token: string): Payload {
-        return jwt.verify(token, this.secret) as Payload;
+        try {
+            return jwt.verify(token, this.secret) as Payload;
+        } catch (error) {
+            throw handleJWTError(error);
+        }
     }
 
     /**
@@ -87,4 +99,16 @@ export default class JsonWebToken<
     static verifyAccess(token: string, publicKey: string | Buffer) {
         return jwt.verify(token, publicKey) as any;
     }
+}
+
+function handleJWTError(error: unknown): ApiError | unknown {
+    if (
+        error instanceof JsonWebTokenError ||
+        error instanceof TokenExpiredError ||
+        error instanceof NotBeforeError
+    ) {
+        return ClientError.Unauthorized(error.message);
+    }
+
+    return ServerError.InternalServerError();
 }
